@@ -25,6 +25,9 @@ Route::delete('hapusPtk/{ptk}', 'ptks@destroy');
 Route::get('pd', 'pds@index');
 Route::get('addPd', 'pds@create');
 Route::POST('addPd', 'pds@store');
+Route::get('editPd/{pd}', 'pds@edit');
+Route::patch('editPd/{pd}', 'pds@update');
+Route::delete('hapusPd/{pd}', 'pds@destroy');
 
 Route::get('romble', 'rombles@index');
 Route::POST('addRomble', 'rombles@store');

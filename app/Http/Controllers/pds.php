@@ -16,7 +16,8 @@ class pds extends Controller
      */
     public function index()
     {
-        return view('pages/pd/pd');
+        $pd = pd::all();
+        return view('pages/pd/pd', compact('pd'));
     }
 
     /**
@@ -99,7 +100,8 @@ class pds extends Controller
      */
     public function edit(pd $pd)
     {
-        //
+        $p = pd::where('id', $pd->id)->first();
+        return view('pages/pd/editPd', compact('p'));
     }
 
     /**
@@ -111,7 +113,46 @@ class pds extends Controller
      */
     public function update(Request $request, pd $pd)
     {
-        //
+        $this->validate($request, [
+            'nama' => 'required|string',
+            'gender' => 'required|string',
+            'tempat' => 'required|string',
+            'tanggal' => 'required|string',
+            'ibu' => 'required|string',
+            'nik' => 'required|string',
+            'nisn' => 'required|string',
+            'asal' => 'required|string',
+            'hp' => 'required|string',
+            'ket' => 'required|string',
+            'alamat' => 'required|string',
+            'desa' => 'required|string',
+            'kec' => 'required|string',
+            'kab' => 'required|string',
+            'prov' => 'required|string',
+            'tms' => 'required|string',
+        ]);
+
+        $data = array(
+            'nama' => ucwords($request->nama),
+            'gender' => $request->gender,
+            'tempat' => ucwords($request->tempat),
+            'tanggal' => $request->tanggal,
+            'ibu' => ucwords($request->ibu),
+            'nik' => $request->nik,
+            'nisn' => $request->nisn,
+            'asal' => $request->asal,
+            'hp' => $request->hp,
+            'ket' => $request->ket,
+            'alamat' => ucwords($request->alamat),
+            'desa' => ucwords($request->desa),
+            'kec' => ucwords($request->kec),
+            'kab' => ucwords($request->kab),
+            'prov' => ucwords($request->prov),
+            'tms' => $request->tms,
+        );
+
+        pd::where('id', $pd->id)->update($data);
+        return redirect('pd');
     }
 
     /**
@@ -122,6 +163,7 @@ class pds extends Controller
      */
     public function destroy(pd $pd)
     {
-        //
+        pd::where('id', $pd->id)->delete();
+        return redirect('pd');
     }
 }

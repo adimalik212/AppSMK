@@ -52,8 +52,12 @@
                                                 <td>
                                                     <h2 class="table-avatar">
                                                         @foreach ($walas->where('id', $r->walas) as $p)
-                                                            <a href="profile.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="assets/img/ptk/{{$p->img}}" alt="User Image"></a>
-                                                            <a href="profile.html">{{$p->nama}}</a>
+                                                            @if ($p->img == null)
+                                                                <a href="#" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="assets/img/ptk/doctor-thumb-01.jpg" alt="User Image"></a>
+                                                            @else
+                                                                <a href="#" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="assets/img/ptk/{{$p->img}}" alt="User Image"></a>
+                                                            @endif
+                                                            <a href="#">{{$p->nama}}</a>
                                                         @endforeach
                                                     </h2>
                                                 </td>
