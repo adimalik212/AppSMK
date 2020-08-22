@@ -98,7 +98,30 @@ class rombles extends Controller
      */
     public function update(Request $request, romble $romble)
     {
-        //
+        $this->validate($request, [
+            'tingkat' => 'required|string',
+            'jurusan' => 'required|string',
+            'kelas' => 'required|string',
+            'walas' => 'required|string',
+        ]);
+        if ($request->jurusan == 'Multimedia') {
+            $j = 'MM';
+        }elseif ($request->jurusan == 'Tata Boga') {
+            $j = 'TB';
+        }else {
+            $j = 'AKL';
+        };
+
+        $data = array(
+            'tingkat' => $request->tingkat,
+            'jurusan' => $request->jurusan,
+            'kelas' => $request->kelas,
+            'romble' => $request->tingkat.' '.$j.' '.$request->kelas,
+            'walas' => $request->walas,
+        );
+
+        romble::where('id', $romble->id)->update($data);
+        return redirect('romble'); 
     }
 
     /**
@@ -109,6 +132,7 @@ class rombles extends Controller
      */
     public function destroy(romble $romble)
     {
-        //
+        romble::where('id', $romble->id)->delete();
+        return redirect('romble'); 
     }
 }

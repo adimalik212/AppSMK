@@ -65,7 +65,7 @@
                                                 <td>3215</td>
                                                 
                                                 <td>
-                                                    <a href="/editRomble/{{$r->id}}" class="btn btn-success btn-sm float-right mt-2 mr-2"><i class="fe fe-edit"></i></a>
+                                                    <a href="#editRomble{{$r->id}}" data-toggle="modal" class="btn btn-success btn-sm float-right mt-2 mr-2"><i class="fe fe-edit"></i></a>
                                                     <form action="/hapusRomble/{{$r->id}}" method="post"> @csrf @method('delete')
                                                         <button type="submit" class="btn btn-danger btn-sm float-right mt-2 mr-2"><i class="fe fe-trash"></i></button>
                                                     </form>
@@ -153,11 +153,87 @@
         </div>
     </div>
     <!-- /ADD Modal -->
+    @foreach ($romble as $r)
+        
+    <div class="modal fade" id="editRomble{{$r->id}}" aria-hidden="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document" >
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tambah Romble</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/editRomble/{{$r->id}}" method="POST"> @csrf @method('patch')
+                        <div class="row form-row">
+                            <div class="col-12 col-sm-4">
+                                <div class="form-group">
+                                    <label>Tingkat</label>
+                                    <select name="tingkat" class="select">
+                                        <option value="{{$r->tingkat}}">{{$r->tingkat}}</option>
+                                        <option>-- Pilih --</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-4">
+                                <div class="form-group">
+                                    <label>Jurusan</label>
+                                    <select name="jurusan" class="select">
+                                        <option value="{{$r->jurusan}}">{{$r->jurusan}}</option>
+                                        <option>-- Pilih --</option>
+                                        <option value="Multimedia">Multimedia</option>
+                                        <option value="Tata Boga">Tata Boga</option>
+                                        <option value="Akuntansi KL">Akuntansi KL</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-4">
+                                <div class="form-group">
+                                    <label>Kelas</label>
+                                    <select name="kelas" class="select">
+                                        <option value="{{$r->kelas}}">{{$r->kelas}}</option>
+                                        <option>-- Pilih --</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-12">
+                                <div class="form-group">
+                                    <label>Wali Kelas</label>
+                                    <select name="walas" class="select">
+                                        @foreach ($walas->where('id', $r->walas) as $w)
+                                            <option value="{{$w->id}}">{{$w->nama}}</option>
+                                        @endforeach
+                                        <option value="">-- Pilih --</option>
+                                        @foreach ($walas as $w)
+                                            <option value="{{$w->id}}">{{$w->nama}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <button type="submit" class="btn btn-info btn-block">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endforeach
+
 @endsection
 
 @section('script')
         <!-- Datatables JS -->
-        <script src="assets/js/select2.min.js"></script>
+        <script src="/assets/js/select2.min.js"></script>
     <script src="/assets/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="/assets/plugins/datatables/datatables.min.js"></script>
 @endsection

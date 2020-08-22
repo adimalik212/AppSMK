@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// ??
+
 Route::get('/', function () { return view('pages/dashboard'); });
 Route::get('ptk', 'ptks@index');
 Route::POST('addPtk','ptks@store');
@@ -28,3 +28,5 @@ Route::POST('addPd', 'pds@store');
 
 Route::get('romble', 'rombles@index');
 Route::POST('addRomble', 'rombles@store');
+Route::patch('editRomble/{romble}', 'rombles@update');
+Route::delete('hapusRomble/{romble}', 'rombles@destroy');
